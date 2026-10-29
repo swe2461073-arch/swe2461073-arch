@@ -1,0 +1,38 @@
+export const translations = {
+  mn: {
+    nav: {
+      overview: "Тойм",
+      search: "Хайлт",
+      calculation: "Тооцоолуур",
+      books: "Ном",
+      contact: "Холбоо барих",
+      language: "EN",
+      brandSpan: "Монголын",
+      brand: "хүнсний найрлагын мэдээллийн сан",
+    },
+    overview: { title: "Тойм", welcome: "Тойм хуудсанд тавтай морил." },
+    search: { title: "Хайлт", welcome: "Хайлт хуудсанд тавтай морил." },
+    calculation: { title: "Тооцоолуур", welcome: "Тооцоолуур хуудсанд тавтай морил." },
+    books: { title: "Ном", welcome: "Ном хуудсанд тавтай морил." },
+    contact: { title: "Холбоо барих", welcome: "Холбоо барих хуудсанд тавтай морил." },
+    notFound: { title: "404", welcome: "Хуудас олдсонгүй." },
+  },
+  en: {
+    nav: {
+      overview: "Overview",
+      search: "Search",
+      calculation: "Food Calculator",
+      books: "Books",
+      contact: "Contact us",
+      language: "MN",
+      brandSpan: "Mongolian",
+      brand: "Food Composition Database",
+    },
+    overview: { title: "Overview", welcome: "Welcome to the overview page." },
+    search: { title: "Search", welcome: "Welcome to the Search page." },
+    calculation: { title: "Calculation", welcome: "Welcome to the Calculation page." },
+    books: { title: "Books", welcome: "Welcome to the Books page." },
+    contact: { title: "Contact", welcome: "Welcome to the Contact page." },
+    notFound: { title: "404", welcome: "Page not found." },
+  },
+};
