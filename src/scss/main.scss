@@ -3,58 +3,178 @@
 // variables
 $primaryColor: #2bac73;
 $primaryColorDark: color.scale($primaryColor, $lightness: -15%);
+
 $secondaryColor: #ff914d;
 $secondaryColorDark: color.scale($secondaryColor, $lightness: -15%);
 
-@import "../../node_modules/bulma/bulma";
+// Өнгөний хувьсагчид
+@mixin light-vars {
+  --border: #ececf2;
+  --sidebar-bg: #ffffff;
+  --page-bg: #ffffff;
+  --navbar-bg: #f5f5f5;
+  --text-main: #23262f;
+  --text-soft: #6b7280;
+  --active-bg: #fff2e8;
+  --hover-bg: #f7f7fa;
+  --icon-btn-bg: #f2f3f5;
+  --icon-btn-color: #64748b;
+  --subtitle-color: #607089;
+  --overlay: rgba(15, 23, 42, 0.55);
+  --shadow-color: rgba(0, 0, 0, 0.15);
+}
 
 :root {
-  --bulma-primary-h: 151deg;
-  --bulma-primary-s: 65%;
-  --bulma-primary-l: 42%;
-  --orange: #{$secondaryColor};
+  --sidebar-width: clamp(280px, 22vw, 340px); // Sidebar-ийн өргөн (280px-340px хооронд, дэлгэцийн 22%-ийг эзэлнэ)
+  --pink: #ff6f91;
+  --green: #2bac73;
+  --orange: #ff914d;
+
+  @include light-vars;
 }
 
-// override bulma button
-.button.is-primary {
-  background-color: $primaryColor;
-  border-color: $primaryColor;
-  color: white;
-  transition: all 0.2s ease;
-  &:hover {
-    background-color: $primaryColorDark;
-    border-color: $primaryColorDark;
+@import "../../node_modules/bulma/bulma";
+
+@import "./components/buttons";
+@import "./components/navbar";
+@import "./layouts/sidebarPageLayout";
+@import "./components/sidebarMenuList";
+@import "./layouts/pageTableContentsLayout";
+@import "./components/imageModal";
+@import "./components/map";
+@import "./components/overviewText";
+@import "./components/bookCard";
+@import "./components/pdfModal";
+@import "./components/footer";
+
+// Mobile (<768px) → Sidebar = slide menu (hidden → open)
+// Tablet (≤1023px) → зөвхөн хэмжээ багасгана
+// Desktop (≥769px) → Sidebar = байнга харагдана (static)
+
+/* =========================
+   DESKTOP (>=769px)
+========================= */
+@media screen and (min-width: 769px) {
+  .app-mobile-sidebar,
+  .app-sidebar-mobile-head {
+    /* Mobile-д зориулсан элементүүдийг нуух */
+    display: none;
+  }
+
+  .app-sidebar {
+    /* Sidebar-г буцааж хэвийн layout-д оруулна */
+    position: static;
+
+    /* translate animation-г устгана */
+    transform: none;
+
+    height: auto;
+
+    /* Mobile shadow-г арилгана */
+    box-shadow: none;
   }
 }
-.button.is-secondary {
-  background-color: $secondaryColor;
-  border-color: $secondaryColor;
-  color: white;
-  transition: all 0.2s ease;
-  &:hover {
-    background-color: $secondaryColorDark;
-    border-color: $secondaryColorDark;
+
+/* =========================
+   TABLET (<=1024px)
+========================= */
+@media screen and (max-width: 1023px) {
+  // .app-main-content {
+  //   padding: 2rem 2rem 2.5rem; /* Desktop-оос арай бага padding */
+  // }
+
+  .app-title {
+    line-height: 1.1;
+    margin-bottom: 0.9rem;
+  }
+
+  .app-subtitle {
+    margin-bottom: 2rem;
+  }
+
+  .app-tbl {
+    font-size: 0.9rem;
   }
 }
 
-// top navbar
-.navbar-brand a {
-  p { color: $primaryColor; font-size: 1rem; }
-  span { color: $secondaryColor; }
+/* =========================
+   MOBILE (<=768px)
+========================= */
+@media screen and (max-width: 768px) {
+  .app-shell {
+    display: block; /* Sidebar + main layout-ийг stack болгоно */
+    height: auto;
+  }
+
+  .app-mobile-sidebar {
+    display: block; /* Mobile дээр гарч ирэх ↪ button */
+  }
+
+  .app-sidebar {
+    display: block;
+    position: fixed; /* Sidebar-г fixed болгож slide menu болгоно */
+    top: 0;
+    left: 0;
+    width: 320px;
+    max-width: 85vw;
+    min-width: unset;
+    height: 100vh;
+    z-index: 40;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    border-bottom: 0;
+    padding: 1rem 1rem 2rem;
+    overflow-y: auto;
+    /* Sidebar-г default үед нуух (зүүн тийш гаргана) */
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.14);
+  }
+
+  .app-sidebar.is-open {
+    transform: translateX(0); /* Нээгдэх үед буцааж харуулна */
+  }
+
+  .app-sidebar-mobile-head {
+    /* Close button байрлах хэсэг */
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+  }
+
+  // .app-main-content {
+  //   /* Mobile дээр padding багасгана */
+  //   padding: 1.25rem 1rem 2rem;
+  // }
+
+  .app-title {
+    font-size: 1.65rem;
+    line-height: 1.15;
+  }
+
+  .app-subtitle {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.75rem;
+  }
+  .app-tbl {
+    font-size: 0.7rem;
+  }
 }
-.navbar-end a { color: $secondaryColor; }
-.app-sticky { position: sticky; top: 0; z-index: 1000; background-color: #f5f5f5; }
-.app-shadow { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
-.navbar-brand .image img { max-width: 64px; height: auto; }
-.navbar-item { display: flex; align-items: center; gap: 8px; }
-.app-top-navbar-right { flex-grow: 1; justify-content: flex-end; }
-.navbar-brand .app-logo:hover,
-.navbar-brand .app-logo:focus,
-.navbar-brand .app-logo:active { background-color: transparent; color: inherit; box-shadow: none; }
 
-// идэвхтэй цэс (өөрийн нэмсэн)
-.navbar-item.is-active:not(.app-logo) { border-bottom: 3px solid $primaryColor; }
+/* =========================
+   SMALL MOBILE (<=480px)
+========================= */
+@media screen and (max-width: 480px) {
+  // .app-main-content {
+  //   padding: 1rem 0.9rem 1.5rem;
+  // }
 
-// page title
-.app-title { font-size: clamp(1.6rem, 3.2vw, 2.25rem); line-height: 1.12; font-weight: 800; margin-bottom: 0.5rem; }
-.app-line { width: 76px; height: 3px; border-radius: 999px; background: var(--orange); margin-bottom: 1.5rem; }
+  .app-title {
+    font-size: 1.45rem;
+  }
+
+  .app-subtitle {
+    font-size: 0.95rem;
+  }
+}

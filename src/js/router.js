@@ -1,4 +1,3 @@
-// Hash router: URL-ийн # хэсэг өөрчлөгдөхөд тохирох page функцийг ажиллуулна.
 export function initRouter(routes) {
   function renderRoute() {
     const hash = window.location.hash || "#/overview";
@@ -7,19 +6,16 @@ export function initRouter(routes) {
     if (page) {
       page();
     } else {
-      routes["#/404"]?.();
+      const notFound = routes["#/404"];
+      if (notFound) {
+        notFound();
+      }
     }
-
-    markActiveLink(hash);
   }
 
-  // Идэвхтэй цэсийг тодруулна (өөрийн нэмсэн сайжруулалт)
-  function markActiveLink(hash) {
-    document.querySelectorAll(".navbar-item[href^='#/']").forEach((link) => {
-      link.classList.toggle("is-active", link.getAttribute("href") === hash);
-    });
-  }
-
+  // Хуудас анх ачаалагдахад renderRoute() ажиллана
   window.addEventListener("load", renderRoute);
+
+  // URL-ийн # хэсэг өөрчлөгдөх бүрд renderRoute() дахин ажиллана
   window.addEventListener("hashchange", renderRoute);
 }

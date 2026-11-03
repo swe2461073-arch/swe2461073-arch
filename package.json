@@ -1,22 +1,18 @@
 {
-  "name": "spa-mfcd-v2",
+  "name": "creation",
   "version": "1.0.0",
-  "description": "Mongolian Food Composition Database - SPA (2.1-2.5)",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "sass": "sass --watch src/scss/main.scss src/css/main.css",
-    "build": "sass --quiet src/scss/main.scss src/css/main.css",
-    "test": "node test/spa.test.mjs",
-    "docs": "rm -rf docs && mkdir docs && cp -r src/* docs/"
+    "sass": "sass --watch src/scss/main.scss:src/css/main.css",
+    "generate:images": "node src/tools/generate-images-json.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^7.3.1",
     "bulma": "^1.0.4",
-    "jsdom": "^30.1.3",
-    "sass": "^1.107.0"
-  },
-  "type": "module"
+    "sass": "^1.93.2"
+  }
 }

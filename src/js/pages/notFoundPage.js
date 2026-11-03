@@ -1,4 +1,3 @@
-import { t } from "../i18n/i18n.js";
 import { renderPageLayout } from "../layouts/pageLayout.js";
 
 export function renderNotFoundPage() {
@@ -6,9 +5,9 @@ export function renderNotFoundPage() {
 
   app.innerHTML = renderPageLayout({
     id: "notFound",
-    title: t("notFound.title"),
+    title: "Not Found",
     content: `
-      <p>${t("notFound.welcome")}</p>
+      <p>Welcome to the Not Found page.</p>
     `,
   });
 }
